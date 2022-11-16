@@ -60,11 +60,11 @@
 ## 화면 설계서
 - 메인 화면
 
-![ui1](https://user-images.githubusercontent.com/52191425/202133481-ca402c51-0f00-4323-85ab-89ccb223ba30.png)
+![ui1](https://user-images.githubusercontent.com/52191425/202189397-3a83e003-7b66-4a94-9bbd-47f79faec745.png)
 
 - 실거래 조회 화면
 
-![ui2](https://user-images.githubusercontent.com/52191425/202133490-91c41933-692e-4577-bfb0-199ea94e074d.png)
+![ui2](https://user-images.githubusercontent.com/52191425/202189411-3a47abd9-b1c4-4b0d-a9fa-59525ead5d95.png)
 
 - 게시판 화면
 	
