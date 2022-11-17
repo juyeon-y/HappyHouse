@@ -4,6 +4,10 @@
 
 최태규, 남이랑, 양주연
 
+### 일정
+
+https://docs.google.com/spreadsheets/d/1Cc5a0067j8PnzESmUMJuRNhNCN1mAyBWVfK69Iieapg/edit#gid=0
+
 ### 개발 기간
 
 2022.11.16 ~
