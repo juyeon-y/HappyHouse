@@ -1,8 +1,8 @@
-package com.example.demo.user.service;
+package com.example.demo.member.service;
 
 
-import com.example.demo.user.User;
-import com.example.demo.user.repository.UserRepository;
+import com.example.demo.member.Member;
+import com.example.demo.member.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class OAuthService extends DefaultOAuth2UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     public OAuthService() {
         super();
@@ -31,9 +31,9 @@ public class OAuthService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
 
-        User user = userRepository.findByEmail(oAuth2User.getAttribute("email"));
+        Member member = memberRepository.findByEmail(oAuth2User.getAttribute("email"));
 
-        if (user == null) {
+        if (member == null) {
 
             registerNew(oAuth2User);
         }
@@ -45,12 +45,12 @@ public class OAuthService extends DefaultOAuth2UserService {
 
     private void registerNew(OAuth2User userInfo) {
         Map<String, Object> attributes = userInfo.getAttributes();
-        User build = User.builder()
+        Member build = Member.builder()
                 .email((String) attributes.get("sub"))
                 .name((String) attributes.get("name"))
                 .build();
 
-        userRepository.save(build);
+        memberRepository.save(build);
     }
 
 

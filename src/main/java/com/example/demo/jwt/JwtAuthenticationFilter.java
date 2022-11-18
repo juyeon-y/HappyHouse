@@ -1,8 +1,8 @@
 package com.example.demo.jwt;
 
 
-import com.example.demo.user.User;
-import com.example.demo.user.request.UserLoginRequest;
+import com.example.demo.member.Member;
+import com.example.demo.member.request.MemberLoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +31,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ObjectMapper om = new ObjectMapper();
 
         try {
-            UserLoginRequest user = om.readValue(request.getInputStream(), UserLoginRequest.class);
+            MemberLoginRequest user = om.readValue(request.getInputStream(), MemberLoginRequest.class);
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
 
             return authenticationManager.authenticate(token);
@@ -45,9 +45,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
-        User principal = (User) authResult.getPrincipal();
+        Member principal = (Member) authResult.getPrincipal();
         Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
-        String tokens = jwtTokenUtils.createTokens(principal.getEmail(), authorities);
+//        new RefreshToken
+        jwtTokenUtils.generateRefreshToken(principal);
+
+        String tokens = jwtTokenUtils.createTokens(principal, authorities);
         SecurityContextHolder.createEmptyContext().setAuthentication(authResult);
         response.setHeader(AUTHORIZATION, "Bearer " + tokens);
     }

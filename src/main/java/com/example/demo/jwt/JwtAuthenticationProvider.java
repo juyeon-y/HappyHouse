@@ -1,6 +1,6 @@
 package com.example.demo.jwt;
 
-import com.example.demo.user.User;
+import com.example.demo.member.Member;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -25,9 +25,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
         Claims claims = jwtTokenUtils.getAllClaims(((JwtAuthenticationToken) authentication).getToken());
         Collection<? extends GrantedAuthority> grantedAuthorities = createGrantedAuthorities(claims);
 
-        User user = User.builder().email((String) claims.get("email")).build();
+        Member member = Member.builder().email((String) claims.get("email")).build();
         JwtAuthenticationToken jwtAuthenticationToken = new JwtAuthenticationToken(grantedAuthorities, "");
-        jwtAuthenticationToken.setDetails(user);
+        jwtAuthenticationToken.setDetails(member);
         jwtAuthenticationToken.setAuthenticated(true);
         return jwtAuthenticationToken;
     }

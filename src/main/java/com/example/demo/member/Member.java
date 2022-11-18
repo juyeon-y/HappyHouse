@@ -1,7 +1,8 @@
-package com.example.demo.user;
+package com.example.demo.member;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,21 +10,31 @@ import java.util.Collection;
 import java.util.List;
 
 @Getter
-public class User implements UserDetails {
-    private final String nickname;
-    private final String email;
-    private final String password;
-    private final String name;
-    private final String role;
+@NoArgsConstructor
+public class Member implements UserDetails {
+    private Integer id;
+    private  String nickname;
+    private  String email;
+    private  String password;
+    private  String name;
+    private  String role;
 
 
-    @Builder
-    public User(String nickname, String email, String password, String name,String role) {
+    public Member(String nickname, String email, String password, String name, String role) {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.name = name;
         this.role = role;
+    }
+    @Builder
+    public Member(String nickname, String email, String password, String name, String role, Integer id) {
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.role = role;
+        this.id = id;
     }
 
     @Override

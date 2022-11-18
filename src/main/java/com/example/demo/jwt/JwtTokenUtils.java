@@ -1,25 +1,30 @@
 package com.example.demo.jwt;
 
+import com.example.demo.member.Member;
+import com.example.demo.redis.RefreshToken;
+import com.example.demo.redis.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class JwtTokenUtils {
     private static final String key = "secret";
-    private static final long exp = 60L * 60 * 24 * 365 * 1000;
+    private static final long exp = 5 * 1000;
+    private final RefreshTokenRepository refreshTokenRepository;
 
-    public String createTokens(String email, Collection<? extends GrantedAuthority> authorities) {
+    public JwtTokenUtils(RefreshTokenRepository refreshTokenRepository) {
+        this.refreshTokenRepository = refreshTokenRepository;
+    }
+
+    public String createTokens(Member  member, Collection<? extends GrantedAuthority> authorities) {
         Map<String, Object> map = new HashMap<>();
-        map.put("email", email);
+        map.put("email", member.getEmail());
+        map.put("id", member.getId());
         map.put("roles", authorities);
         return createTokens(map);
     }
@@ -37,24 +42,14 @@ public class JwtTokenUtils {
                 .compact();
     }
 
-    public boolean validateTokens(String token) {
-        String[] s = token.split(" ");
-        token = s[1];
-        try {
-            return !isExpired(token);
-        } catch (JwtException e) {
-            return false;
-        }
-    }
+    public void generateRefreshToken(Member member) {
 
+        RefreshToken refreshToken = new RefreshToken(UUID.randomUUID().toString(), member.getId());
+        refreshTokenRepository.save(refreshToken);
+
+    }
     public Claims getAllClaims(String token) {
         return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
     }
 
-    private boolean isExpired(String token) {
-        Claims claims = getAllClaims(token);
-        Date expiration = claims.getExpiration();
-        Date now = new Date();
-        return !now.after(expiration);
-    }
 }

@@ -1,5 +1,6 @@
-package com.example.demo.user.request;
+package com.example.demo.member.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +9,8 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor
-public class UserLoginRequest {
+@AllArgsConstructor
+public class MemberLoginRequest {
     @Email
     private String email;
     @NotBlank
