@@ -9,16 +9,16 @@ import java.util.concurrent.TimeUnit;
 @Repository
 public class RefreshTokenRepository {
 
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<String, String> redisTemplate;
 
-    public RefreshTokenRepository(final RedisTemplate redisTemplate) {
+    public RefreshTokenRepository(final RedisTemplate<String, String> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
     public void save(final RefreshToken refreshToken) {
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         valueOperations.set(String.valueOf(refreshToken.getMemberId()), refreshToken.getRefreshToken());
-        redisTemplate.expire(String.valueOf(refreshToken.getMemberId()), 10, TimeUnit.SECONDS);
+        redisTemplate.expire(String.valueOf(refreshToken.getMemberId()), 1, TimeUnit.DAYS);
     }
 
     public boolean findById(final Integer memberId) {

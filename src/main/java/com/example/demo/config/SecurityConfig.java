@@ -5,6 +5,7 @@ import com.example.demo.jwt.JwtAuthenticationProvider;
 import com.example.demo.jwt.JwtAuthorizeFilter;
 import com.example.demo.jwt.JwtTokenUtils;
 import com.example.demo.member.service.OAuthService;
+import com.example.demo.oAuth.OAuth2AuthenticationSuccessHandler;
 import com.example.demo.redis.RefreshTokenRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final JwtTokenUtils jwtTokenUtils;
     private final ObjectMapper objectMapper;
+    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Bean
 
@@ -61,12 +63,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().disable();
         http.csrf().disable();
-//        http.oauth2Login()
-//                .loginPage("/login")
-//                .authorizationEndpoint()
-//                .and()
-//                .userInfoEndpoint()
-//                .userService(oAuthService);
+        http.oauth2Login()
+                .authorizationEndpoint()
+                .and()
+                .userInfoEndpoint()
+                .userService(oAuthService)
+                .and()
+                .successHandler(oAuth2AuthenticationSuccessHandler);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), new JwtTokenUtils(refreshTokenRepository)), UsernamePasswordAuthenticationFilter.class);

@@ -49,7 +49,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Collection<? extends GrantedAuthority> authorities = authResult.getAuthorities();
 //        new RefreshToken
         jwtTokenUtils.generateRefreshToken(principal);
-
         String tokens = jwtTokenUtils.createTokens(principal, authorities);
         SecurityContextHolder.createEmptyContext().setAuthentication(authResult);
         response.setHeader(AUTHORIZATION, "Bearer " + tokens);

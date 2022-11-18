@@ -46,8 +46,9 @@ public class OAuthService extends DefaultOAuth2UserService {
     private void registerNew(OAuth2User userInfo) {
         Map<String, Object> attributes = userInfo.getAttributes();
         Member build = Member.builder()
-                .email((String) attributes.get("sub"))
+                .email((String) attributes.get("email"))
                 .name((String) attributes.get("name"))
+                .role("ROLE_USER")
                 .build();
 
         memberRepository.save(build);
