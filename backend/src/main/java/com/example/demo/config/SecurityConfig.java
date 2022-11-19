@@ -71,8 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .successHandler(oAuth2AuthenticationSuccessHandler);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.cors();
 
-        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), new JwtTokenUtils(refreshTokenRepository)), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), new JwtTokenUtils(refreshTokenRepository),objectMapper), UsernamePasswordAuthenticationFilter.class);
         http.addFilterAfter(new JwtAuthorizeFilter(authenticationManager(), refreshTokenRepository, jwtTokenUtils), JwtAuthenticationFilter.class);
         http
                 .authorizeRequests()
@@ -103,10 +104,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
+        configuration.addExposedHeader("Authorization");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

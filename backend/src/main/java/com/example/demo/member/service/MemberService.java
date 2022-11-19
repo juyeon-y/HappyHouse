@@ -2,11 +2,13 @@ package com.example.demo.member.service;
 
 import com.example.demo.member.Member;
 import com.example.demo.member.repository.MemberRepository;
-import com.example.demo.member.request.MemberRegistRequest;
+import com.example.demo.member.request.MemberRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class MemberService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public void regist(MemberRegistRequest request) {
+    public void regist(MemberRegisterRequest request) {
         String encode = passwordEncoder.encode(request.getPassword());
 
         log.info("encode password : {} ", encode);
@@ -27,5 +29,10 @@ public class MemberService {
                 .name(request.getName())
                 .email(request.getEmail()).role("ROLE_USER").build();
         memberRepository.save(member);
+    }
+
+    public boolean checkEmail(String email) {
+        Optional<Member> member = Optional.ofNullable(memberRepository.findByEmail(email));
+        return member.isPresent();
     }
 }
