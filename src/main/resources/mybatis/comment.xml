@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.comment.mapper.CommentMapper">
+	<select id="getCmtList" resultType="comment" parameterType="int">
+		SELECT *, (select count(*) from comment_like where
+		comment_id=comment.id) as likes FROM comment 
+		where board_code = #{board_code}
+	</select>
+</mapper>
