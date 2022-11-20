@@ -1,7 +1,7 @@
 package com.example.demo.comment.dto;
 
 public class Comment {
-	private int id, board_code, member_id, likes;
+	private int id, board_code, member_id, likes, liked;
 	private String comment, writer;
 
 	public Comment() {
@@ -9,31 +9,31 @@ public class Comment {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Comment(int id, int board_code, int member_id, int likes, String comment, String writer) {
+	public Comment(int id, int board_code, int member_id, int likes, int liked, String comment, String writer) {
 		super();
 		this.id = id;
 		this.board_code = board_code;
 		this.member_id = member_id;
 		this.likes = likes;
+		this.liked = liked;
 		this.comment = comment;
 		this.writer = writer;
 	}
 
-	public Comment(int id, int board_code, int member_id, String comment, String writer) {
-		super();
-		this.id = id;
-		this.board_code = board_code;
-		this.member_id = member_id;
-		this.comment = comment;
-		this.writer = writer;
-	}
-
-	public int getlikes() {
+	public int getLikes() {
 		return likes;
 	}
 
-	public void setlikes(int likes) {
+	public void setLikes(int likes) {
 		this.likes = likes;
+	}
+
+	public int getLiked() {
+		return liked;
+	}
+
+	public void setLiked(int liked) {
+		this.liked = liked;
 	}
 
 	public int getId() {
