@@ -79,9 +79,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/user/test")
                 .authenticated();
+        http.authorizeRequests().antMatchers("/**").permitAll();
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/**").permitAll();
-
+        http
+                .headers()
+                .xssProtection()
+                .and()
+                .contentSecurityPolicy("script-src 'self'");
 
         http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) -> {
             response.setStatus(HttpStatus.FORBIDDEN.value());

@@ -149,10 +149,15 @@ const memberStore = {
         console.log(error)
       }
     },
-    // async checkEmail(email){
-    //   await logout(email,
-    //     ({data}))
-    // }
+    async redirectOAuth({commit},member){
+
+      commit("SET_IS_LOGIN",true)
+      commit("SET_USER_INFO",{name:member.name});
+      sessionStorage.setItem("access-token", member.token);
+      console.log(member);
+      console.log(member.token)
+      console.log(sessionStorage.getItem("access-token"));
+    },
   },
 };
 

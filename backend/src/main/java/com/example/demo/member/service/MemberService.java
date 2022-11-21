@@ -35,4 +35,15 @@ public class MemberService {
         Optional<Member> member = Optional.ofNullable(memberRepository.findByEmail(email));
         return member.isPresent();
     }
+
+    public Member findById(Member member){
+
+        return memberRepository.findById(member.getId());
+    }
+
+    public void update(Member member) {
+        memberRepository.update(member);
+    }
+
+
 }
