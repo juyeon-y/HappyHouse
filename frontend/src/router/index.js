@@ -66,11 +66,15 @@ const routes = [
         component: () => import("@/components/user/UserLogin"),
       },
       {
-        path: "mypage",
+        path: "/member/mypage",
         name: "mypage",
-        beforeEnter: onlyAuthUser,
         component: () => import("@/components/user/UserMyPage"),
       },
+      {
+        path:"oauth",
+        name:"oauth",
+        component: ()=> import("@/components/user/UserOAuthRedirect")
+      }
     ],
   },
   {
