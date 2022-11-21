@@ -1,20 +1,19 @@
 <template>
   <b-row class="mt-4 mb-4 text-center">
-    <!-- <b-col class="sm-3">
-      <b-form-input
-        v-model.trim="dongCode"
-        placeholder="동코드 입력...(예 : 11110)"
-        @keypress.enter="sendKeyword"
-      ></b-form-input>
+    <b-col>
+      <v-select v-model="sidoCode" :items="sidos" @change="gugunList" dense solo></v-select>
     </b-col>
-    <b-col class="sm-3" align="left">
-      <b-button variant="outline-primary" @click="sendKeyword">검색</b-button>
-    </b-col> -->
-    <b-col class="sm-3">
-      <b-form-select v-model="sidoCode" :options="sidos" @change="gugunList"></b-form-select>
+    <b-col>
+      <v-select v-model="gugunCode" :items="guguns" @change="dongList" dense solo></v-select>
     </b-col>
-    <b-col class="sm-3">
-      <b-form-select v-model="gugunCode" :options="guguns" @change="searchApt"></b-form-select>
+    <b-col>
+      <v-select v-model="dongCode" :items="dongs" @change="yearList" dense solo></v-select>
+    </b-col>
+    <b-col>
+      <v-select v-model="dealYear" :items="years" @change="monthList" dense solo></v-select>
+    </b-col>
+    <b-col>
+      <v-select v-model="dealMonth" :items="months" @change="searchApt" dense solo></v-select>
     </b-col>
   </b-row>
 </template>
@@ -40,10 +39,13 @@ export default {
     return {
       sidoCode: null,
       gugunCode: null,
+      dongCode: null,
+      dealYear: null,
+      dealMonth: null,
     };
   },
   computed: {
-    ...mapState(houseStore, ["sidos", "guguns", "houses"]),
+    ...mapState(houseStore, ["sidos", "guguns", "dongs", "years", "months", "houses"]),
     // sidos() {
     //   return this.$store.state.sidos;
     // },
@@ -56,8 +58,15 @@ export default {
     this.getSido();
   },
   methods: {
-    ...mapActions(houseStore, ["getSido", "getGugun", "getHouseList"]),
-    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_APT_LIST"]),
+    ...mapActions(houseStore, ["getSido", "getGugun", "getDong", "getYear", "getMonth", "getHouseList"]),
+    ...mapMutations(houseStore, [
+      "CLEAR_SIDO_LIST",
+      "CLEAR_GUGUN_LIST",
+      "CLEAR_DONG_LIST",
+      "CLEAR_YEAR_LIST",
+      "CLEAR_MONTH_LIST",
+      "CLEAR_APT_LIST",
+    ]),
     // sidoList() {
     //   this.getSido();
     // },
@@ -67,11 +76,27 @@ export default {
       this.gugunCode = null;
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
+    dongList() {
+      // console.log(this.gugunCode);
+      this.CLEAR_DONG_LIST();
+      this.dongCode = null;
+      if (this.gugunCode) this.getDong(this.gugunCode);
+    },
+    yearList() {
+      this.CLEAR_YEAR_LIST();
+      this.dealYear = null;
+      if (this.dongCode) this.getYear(this.dongCode);
+    },
+    monthList() {
+      this.CLEAR_MONTH_LIST();
+      this.dealMonth = null;
+      if (this.dealYear) this.getMonth([this.dongCode, this.dealYear]);
+    },
     searchApt() {
-      if (this.gugunCode) this.getHouseList(this.gugunCode);
+      if (this.dealMonth) this.getHouseList([this.dongCode, this.dealYear, this.dealMonth]);
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped></style>

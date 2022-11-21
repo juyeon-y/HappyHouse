@@ -44,6 +44,19 @@ const routes = [
     path: "/house",
     name: "house",
     component: AppHouse,
+    redirect: "/house/list",
+    children: [
+      {
+        path: "list",
+        name: "houselist",
+        component: () => import("@/components/house/HouseList"),
+      },
+      {
+        path: "detail",
+        name: "housedetail",
+        component: () => import("@/components/house/HouseDetail"),
+      },
+    ],
   },
   {
     path: "/todo",
