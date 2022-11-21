@@ -14,7 +14,7 @@ import java.util.*;
 @Component
 public class JwtTokenUtils {
     private static final String key = "secret";
-    private static final long exp = 60 * 1000;
+    private static final long exp = 10*60 * 1000;
     private final RefreshTokenRepository refreshTokenRepository;
 
     public JwtTokenUtils(RefreshTokenRepository refreshTokenRepository) {

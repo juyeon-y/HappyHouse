@@ -9,6 +9,10 @@ import org.springframework.stereotype.Repository;
 public interface MemberRepository {
 
     Member findByEmail(String email);
+    Member findById(Integer id);
 
     void save(Member member);
+
+    void update(Member member);
+
 }

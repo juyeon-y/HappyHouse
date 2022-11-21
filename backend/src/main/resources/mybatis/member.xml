@@ -9,10 +9,23 @@
         insert into member(email, name, nickname, password,role)
         values (#{email}, #{name}, #{nickname}, #{password} ,#{role})
     </insert>
+    <update id="update" parameterType="Member">
+        update member
+        set name=#{name},
+            email=#{email},
+            nickname=#{nickname}
+        where id = #{id};
+    </update>
     <select id="findByEmail" parameterType="String" resultType="com.example.demo.member.Member">
         select id, `name`, `password`, nickname, email, `role`
         from member
         where email = #{email}
+    </select>
+    <select id="findById" resultType="com.example.demo.member.Member">
+
+        select id, `name`, `password`, nickname, email, `role`
+        from member
+        where id = #{id}
     </select>
 
 
