@@ -55,13 +55,11 @@
 
 	<insert id="writeBoard" parameterType="board">
 		insert into board(writer, title, content)
-		values(#{writer}, #{title},
-		#{content})
+		values(#{writer}, #{title},#{content})
 		<selectKey resultType="int" keyProperty="code" order="AFTER">
 			select
 			last_insert_id()
 		</selectKey>
-
 	</insert>
 
 	<insert id="createFile" parameterType="board">

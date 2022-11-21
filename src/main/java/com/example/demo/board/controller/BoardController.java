@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,11 +38,15 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 
-	@PostMapping("/list")
+	@CrossOrigin(origins = "http://localhost:8080")
+	@GetMapping
 	@ResponseBody
-	public PageInfo<Board> getBoardList() {
+	public PageInfo<Board> getBoardList(HttpServletRequest request) {	
+		System.out.println("pageNum"+request.getParameter("pageNum"));
+		System.out.println("pageSize"+request.getParameter("pageSize"));
+		
+		PageHelper.startPage(request);
 		List<Board> list = boardService.getBoardList();
-		PageHelper.startPage(1, 5);
 		return PageInfo.of(list);
 	}
 
