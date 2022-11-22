@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  database-mysql:
+    container_name: database-mysql
+    image: mysql/mysql-server:8.0
+
+    environment:
+      MYSQL_ROOT_PASSWORD: 'simple'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: 'simple'
+    ports:
+      - 3307:3307
+
+  springboot:
+    image: suker800/happyhouse
+    ports:
+      - 9999:10001
+    links:
+      - database-mysql
+    depends_on:
+      - database-mysql
+
+
