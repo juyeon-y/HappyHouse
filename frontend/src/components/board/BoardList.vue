@@ -25,11 +25,17 @@
             <router-link
               :to="{
                 name: 'boardview',
-                params: { code: data.item.code },
+                params: {
+                  code: data.item.code,
+                  member_id: this.userInfo.id,
+                },
               }"
             >
               {{ data.item.title }}
             </router-link>
+          </template>
+          <template #cell(reg_datetime)="data">
+            {{ new Date(data.item.reg_datetime).toLocaleString() }}
           </template>
         </b-table>
         <span v-if="data.hasPreviousPage" @click="reload(data.prePage)"
@@ -47,6 +53,9 @@
 <script>
 import axios from "axios";
 import { listArticle } from "@/api/board";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 
 export default {
   name: "BoardList",
@@ -64,12 +73,21 @@ export default {
       data: {},
     };
   },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+    message() {
+      if (this.article.content)
+        return this.article.content.split("\n").join("<br>");
+      return "";
+    },
+  },
   created() {
-    let param = { pageNum: 1, pageSize: 5 };
+    let param = { pageNum: 1, pageSize: 10 };
+    // param = JSON.stringify(param);
+
     listArticle(
       param,
       ({ data }) => {
-        console.log(data);
         this.articles = data.list;
         this.data = data;
       },
@@ -83,16 +101,19 @@ export default {
       this.$router.push({ name: "boardwrite" });
     },
     viewArticle(article) {
+      console.log("memberStore : " + this.userInfo.id);
       this.$router.push({
         name: "boardview",
-        params: { code: article.code },
+        params: { code: article.code, member_id: this.userInfo.id },
       });
     },
     reload(pageNum) {
       console.log(pageNum);
+      let a = { pageNum, pageSize: 10 };
+      console.log(a);
       axios
-        .get("http://localhost:9999/vue/board", null, {
-          params: { pageNum, pageSize: 10 },
+        .post("http://localhost:9999/board", null, {
+          params: a,
         })
         .then(({ data }) => {
           console.log("새 데이터", data);
