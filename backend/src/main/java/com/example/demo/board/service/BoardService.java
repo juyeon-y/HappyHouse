@@ -1,6 +1,7 @@
 package com.example.demo.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,33 +19,32 @@ public class BoardService {
 		return boardMapper.getBoardList();
 	}
 
-	public Board selectOne(int code, int member_id) {
-		Board board = boardMapper.selectOne(code);
-		board.setLike(boardMapper.isLike(member_id, code));
+	public Board selectOne(Map<String, Object> map) {
+		Board board = boardMapper.selectOne(map);
+		// board.setLike(boardMapper.isLike(member_id, code));
 		return board;
 	}
 
 	public long writeBoard(Board board) {
 		long write = boardMapper.writeBoard(board);
-		boardMapper.createFile(board);
 		return write;
 	}
 
-	public boolean modifyBoard(String title, String content, String code) {
-		return boardMapper.modifyBoard(title,content,code);
+	public boolean modifyBoard(Board board) {
+		return boardMapper.modifyBoard(board);
 	}
 
 	public boolean deleteBoard(int code) {
 		return boardMapper.deleteBoard(code);
 	}
 
-	public int likeUp(int member_id, int board_code) {
-		return boardMapper.likeUp(member_id, board_code);
+	public int likeUp(Map<String, Object> map) {
+		return boardMapper.likeUp(map);
 
 	}
 
-	public int likeDown(int member_id, int board_code) {
-		return boardMapper.likeDown(member_id, board_code);
+	public int likeDown(Map<String, Object> map) {
+		return boardMapper.likeDown(map);
 
 	}
 

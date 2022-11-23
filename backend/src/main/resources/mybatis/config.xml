@@ -4,9 +4,15 @@
 
     <typeAliases>
         <typeAlias type="com.example.demo.member.Member" alias="member"/>
+        <typeAlias type="com.example.demo.board.dto.Board" alias="board"/>
+        <typeAlias type="com.example.demo.board.dto.FileInfo" alias="fileInfo"/>
+        <typeAlias type="com.example.demo.comment.dto.Comment" alias="comment"/>
+        
     </typeAliases>
     <mappers>
         <mapper resource="mybatis/member.xml" />
+        <mapper resource="mybatis/board.xml" />
+		<mapper resource="mybatis/comment.xml" />
 <!--        <mapper resource="mybatis/board.xml" />-->
 <!--        <mapper resource="mybatis/map.xml" />-->
 <!--        <mapper resource="mybatis/interest.xml" />-->
