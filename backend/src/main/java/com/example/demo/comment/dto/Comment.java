@@ -4,21 +4,6 @@ public class Comment {
 	private int id, board_code, member_id, likes, liked;
 	private String comment, writer;
 
-	public Comment() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Comment(int id, int board_code, int member_id, int likes, int liked, String comment, String writer) {
-		super();
-		this.id = id;
-		this.board_code = board_code;
-		this.member_id = member_id;
-		this.likes = likes;
-		this.liked = liked;
-		this.comment = comment;
-		this.writer = writer;
-	}
 
 	public int getLikes() {
 		return likes;

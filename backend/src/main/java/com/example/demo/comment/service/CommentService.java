@@ -31,12 +31,12 @@ public class CommentService {
 		return commentMapper.modifyCmt(comment);
 	}
 
-	public int likeUp(int id) {
-		return commentMapper.likeUp(id);
+	public int likeUp(Map<String, Object> map) {
+		return commentMapper.likeUp(map);
 	}
 
-	public int likeDown(int id) {
-		return commentMapper.likeDown(id);
+	public int likeDown(Map<String, Object> map) {
+		return commentMapper.likeDown(map);
 	}
 
 }

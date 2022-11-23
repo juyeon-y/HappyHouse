@@ -21,8 +21,8 @@ public interface CommentMapper {
 
 	boolean modifyCmt(Comment comment);
 
-	int likeUp(int id);
+	int likeUp(Map<String, Object> map);
 
-	int likeDown(int id);
+	int likeDown(Map<String, Object> map);
 
 }

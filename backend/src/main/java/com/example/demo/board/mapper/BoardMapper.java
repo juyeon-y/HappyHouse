@@ -1,6 +1,7 @@
 package com.example.demo.board.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.dao.DataAccessException;
@@ -12,21 +13,19 @@ import com.example.demo.board.dto.Board;
 @Repository
 public interface BoardMapper {
 
-	Board selectOne(int code) throws DataAccessException;
+	Board selectOne(Map<String, Object> map) throws DataAccessException;
 
 	List<Board> getBoardList() throws DataAccessException;
 
 	long writeBoard(Board board);
 
-	boolean modifyBoard(String title, String content, String code);
+	boolean modifyBoard(Board board);
 
 	boolean deleteBoard(int code);
 
-	void createFile(Board board);
-
 	int isLike(int member_id, int code);
 
-	int likeUp(int member_id, int board_code);
+	int likeUp(Map<String, Object> map);
 
-	int likeDown(int member_id, int board_code);
+	int likeDown(Map<String, Object> map);
 }

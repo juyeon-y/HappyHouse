@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,19 +25,21 @@ public class CommentController {
 	@Autowired
 	CommentService commentService;
 
-	@GetMapping("{board_code}")
+	@CrossOrigin(origins = "http://localhost:8080")
+	@GetMapping("/list")
 	@ResponseBody
-	public List<Comment> getCmtList(@PathVariable int board_code,@RequestParam("member_id") int member_id) {
+	public List<Comment> getCmtList(@RequestParam("code") int code,@RequestParam("username") String username) {
+		System.out.println("code: "+code+"username: "+username);
 		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("board_code",board_code);
-		map.put("member_id",member_id);
+		map.put("code",code);
+		map.put("username",username);
 		List<Comment> list = commentService.getCmtList(map);
 		return list;
 	}
 
-	@PostMapping("{id}")
+	@PostMapping("/delete")
 	@ResponseBody
-	public String deleteCmt(@PathVariable int id) {
+	public String deleteCmt(@RequestParam("id") int id) {
 		if (commentService.deleteCmt(id)) {
 			return "success";
 		} else {
@@ -67,13 +70,20 @@ public class CommentController {
 
 	@ResponseBody
 	@PostMapping("/likeUp")
-	public int likeup(@RequestParam("id") int id) {
-		return commentService.likeUp(id);
+	public int likeup(@RequestParam("comment_id") int code,@RequestParam("user_id") int id) {
+		System.out.println("code: "+code+"id: "+id);
+		Map<String,Object> map=new HashMap<>();
+		map.put("comment_id",code);
+		map.put("member_id",id);
+		return commentService.likeUp(map);
 	}
 
 	@ResponseBody
 	@PostMapping("/likeDown")
-	public int likeDown(@RequestParam("id") int id) {
-		return commentService.likeDown(id);
+	public int likeDown(@RequestParam("comment_id") int code,@RequestParam("user_id") int id) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("comment_id",code);
+		map.put("member_id",id);
+		return commentService.likeDown(map);
 	}
 }

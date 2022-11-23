@@ -26,7 +26,7 @@
               <b-col cols="2"></b-col>
               <b-col cols="2" align-self="end">이름</b-col
                 ><b-col cols="6" align-self="start"><b-input v-model="member.name" :readonly="readonly"></b-input></b-col>
-              <b-col cols="2"></b-col>
+              <b-col cols="2"></b-col> 
             </b-row>
             <b-row class="my-2">
               <b-col cols="2"></b-col>
