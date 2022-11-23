@@ -42,7 +42,11 @@ public class Board {
 	}
 
 	void setTitle(String title) {
-		this.title = title;
+		if (title != null) {
+			this.title = title;
+		}else {
+			System.out.println("제목이 비어있습니다");
+		}
 	}
 
 	String getContent() {
@@ -50,7 +54,11 @@ public class Board {
 	}
 
 	void setContent(String content) {
-		this.content = content;
+		if(content!=null) {
+			this.content=content;
+		}else {
+			System.out.println("내용이 비어있습니다");
+		}
 	}
 
 	String getWriter() {
@@ -58,7 +66,11 @@ public class Board {
 	}
 
 	void setWriter(String writer) {
-		this.writer = writer;
+		if(writer!=null) {
+			this.writer=writer;
+		}else {
+			System.out.println("작성자가 없습니다");
+		}
 	}
 
 	Date getReg_datetime() {
