@@ -48,7 +48,7 @@ public class MemberController {
 
         Member find = memberService.findById(member);
         if (Objects.equals(member.getId(), find.getId())) {
-            log.info("update request =  {} ",request);
+            log.info("update request =  {} ", request);
             memberService.update(Member.builder()
                     .id(find.getId())
                     .name(request.getName())
@@ -57,6 +57,10 @@ public class MemberController {
                     .build());
         }
 
+    }
 
+    @GetMapping("/test")
+    public void test() {
+        log.info("테스트 메서드 수행");
     }
 }
