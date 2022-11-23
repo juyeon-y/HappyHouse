@@ -16,6 +16,9 @@
             nickname=#{nickname}
         where id = #{id};
     </update>
+    <delete id="delete" parameterType="integer">
+        delete from member where id = #{id};
+    </delete>
     <select id="findByEmail" parameterType="String" resultType="com.example.demo.member.Member">
         select id, `name`, `password`, nickname, email, `role`
         from member
