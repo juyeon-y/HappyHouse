@@ -58,7 +58,6 @@ public class MemberController {
         }
 
     }
-
     @GetMapping("/test")
     public void test() {
         log.info("테스트 메서드 수행");
