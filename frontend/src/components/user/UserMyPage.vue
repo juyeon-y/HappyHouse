@@ -30,13 +30,6 @@
             </b-row>
             <b-row class="my-2">
               <b-col cols="2"></b-col>
-              <b-col cols="2" align-self="end">비밀번호</b-col
-                ><b-col cols="6" align-self="start"><b-input v-model="member.password" type="password" :readonly="readonly"></b-input></b-col>
-              <b-col cols="2"></b-col>
-            </b-row>
-
-            <b-row class="my-2">
-              <b-col cols="2"></b-col>
               <b-col cols="2" align-self="end">이메일</b-col
                 ><b-col cols="6" align-self="start"><b-input v-model="member.email" type="email" :readonly="readonly"></b-input></b-col>
               <b-col cols="2"></b-col>
@@ -57,7 +50,7 @@
 
 <script>
 import axios from 'axios';
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 const memberStore = "memberStore";
 
@@ -65,7 +58,7 @@ export default {
   name: "UserMyPage",
   components: {},
   computed: {
-    ...mapState(memberStore, ["userInfo"]),
+    ...mapState(memberStore, ["userInfo","isLogin"]),
   },
   data() {
     return {
@@ -92,6 +85,8 @@ export default {
     }
   ,
   methods:{
+    ...mapActions(memberStore, ["userLogout"]),
+
     changeReadonly(){
       this.readonly = !this.readonly;
     },
@@ -111,8 +106,10 @@ export default {
         headers : {"Authorization" : sessionStorage.getItem("access-token")}
       }).then((response) =>{
         console.log(response);
-        this.$router.go();
+        this.userLogout();
+        this.$router.push("/");
       });
+      
       }
     
     }
