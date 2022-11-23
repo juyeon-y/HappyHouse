@@ -4,13 +4,15 @@
       <v-btn icon class="hidden-xs-only" @click="goBack">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
-      <v-toolbar-title>{{ house.aptName }}</v-toolbar-title>
+      <v-toolbar-title class="font-weight-bold">{{ house.aptName }}</v-toolbar-title>
     </v-toolbar>
-    <v-card class="overflow-y-auto" height="72vh">
+    <v-card class="overflow-y-auto" height="78vh">
       <b-container v-if="house" class="bv-example-container-row">
         <b-row class="mb-2 mt-1">
           <div id="roadview"></div>
         </b-row>
+        <v-divider></v-divider>
+        <v-card-title class="font-weight-bold">상세정보</v-card-title>
         <v-list-item>
           <v-list-item-title> 아파트 이름 : {{ house.aptName }} </v-list-item-title>
         </v-list-item>
@@ -34,14 +36,15 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 const houseStore = "houseStore";
 
 export default {
   name: "HouseDetail",
   computed: {
-    ...mapState(houseStore, ["house"]),
+    ...mapState(houseStore, ["house", "zoomLevel"]),
+
     // house() {
     //   return this.$store.state.house;
     // },
@@ -53,8 +56,11 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(houseStore, ["UPDATE_ZOOM_LEVEL"]),
     goBack() {
       this.$router.go(-1);
+      this.UPDATE_ZOOM_LEVEL(3);
+      console.log(this.zoomLevel);
     },
     setRoadView() {
       var roadviewContainer = document.getElementById("roadview"); //로드뷰를 표시할 div
