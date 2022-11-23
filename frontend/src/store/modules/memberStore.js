@@ -59,13 +59,16 @@ const memberStore = {
       );
     },
     async getUserInfo({ commit, dispatch }, token) {
-      let decodeToken = jwtDecode(token);
+      console.log(token);
+      let decodeToken = jwtDecode(token.substring(7));
+      
       // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
       await findById(
         decodeToken.userid,
-        ({ data }) => {
-          if (data.message === "success") {
-            commit("SET_USER_INFO", data.userInfo);
+        (response) => {
+          console.log(response);
+          if (response.status === 200) { 
+            commit("SET_USER_INFO", response.data);
             // console.log("3. getUserInfo data >> ", data);
           } else {
             console.log("유저 정보 없음!!!!");
@@ -119,32 +122,39 @@ const memberStore = {
         }
       );
     },
-    async userLogout({ commit }, userid) {
-      await logout(
-        userid,
-        ({ data }) => {
-          if (data.message === "success") {
+    async userLogout({ commit }) {
+      // await logout(
+      //   userid,
+      //   ({ data }) => {
+      //     if (data.message === "success") {
+      //       commit("SET_IS_LOGIN", false);
+      //       commit("SET_USER_INFO", null);
+      //       commit("SET_IS_VALID_TOKEN", false);
+      //     } else {
+      //       console.log("유저 정보 없음!!!!");
+      //     }
+      //   },
+      //   (error) => {
+      //     console.log(error);
+      //   }
+      // );
+
             commit("SET_IS_LOGIN", false);
             commit("SET_USER_INFO", null);
             commit("SET_IS_VALID_TOKEN", false);
-          } else {
-            console.log("유저 정보 없음!!!!");
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
     },
     async MemberLogin({commit},user){
       await login(user,(response) =>{
         let accessToken = response.headers.authorization
+        let refreshToken = response.headers.refresh
         console.log(response)
         console.log(accessToken);
         console.log(response.data);
         commit("SET_IS_LOGIN",true)
         commit("SET_USER_INFO",response.data);
+        commit("SET_IS_VALID_TOKEN", true);
         sessionStorage.setItem("access-token", accessToken);
+        sessionStorage.setItem("refresh-token",refreshToken);
       }),(error) =>{
         console.log(error)
       }
@@ -152,7 +162,9 @@ const memberStore = {
     async redirectOAuth({commit},member){
 
       commit("SET_IS_LOGIN",true)
-      commit("SET_USER_INFO",{name:member.name});
+      commit("SET_USER_INFO",{name:member.name,id:member.id});
+      commit("SET_IS_VALID_TOKEN", true);
+
       sessionStorage.setItem("access-token", member.token);
       console.log(member);
       console.log(member.token)
