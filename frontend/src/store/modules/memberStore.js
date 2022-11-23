@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout,} from "@/api/member";
+import { login, findById, tokenRegeneration, logout } from "@/api/member";
 
 const memberStore = {
   namespaced: true,
@@ -61,13 +61,13 @@ const memberStore = {
     async getUserInfo({ commit, dispatch }, token) {
       console.log(token);
       let decodeToken = jwtDecode(token.substring(7));
-      
+
       // console.log("2. getUserInfo() decodeToken :: ", decodeToken);
       await findById(
         decodeToken.userid,
         (response) => {
           console.log(response);
-          if (response.status === 200) { 
+          if (response.status === 200) {
             commit("SET_USER_INFO", response.data);
             // console.log("3. getUserInfo data >> ", data);
           } else {
@@ -75,14 +75,20 @@ const memberStore = {
           }
         },
         async (error) => {
-          console.log("getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ", error.response.status);
+          console.log(
+            "getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ",
+            error.response.status
+          );
           commit("SET_IS_VALID_TOKEN", false);
           await dispatch("tokenRegeneration");
         }
       );
     },
     async tokenRegeneration({ commit, state }) {
-      console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("access-token"));
+      console.log(
+        "토큰 재발급 >> 기존 토큰 정보 : {}",
+        sessionStorage.getItem("access-token")
+      );
       await tokenRegeneration(
         JSON.stringify(state.userInfo),
         ({ data }) => {
@@ -139,35 +145,35 @@ const memberStore = {
       //   }
       // );
 
-            commit("SET_IS_LOGIN", false);
-            commit("SET_USER_INFO", null);
-            commit("SET_IS_VALID_TOKEN", false);
+      commit("SET_IS_LOGIN", false);
+      commit("SET_USER_INFO", null);
+      commit("SET_IS_VALID_TOKEN", false);
     },
-    async MemberLogin({commit},user){
-      await login(user,(response) =>{
-        let accessToken = response.headers.authorization
-        let refreshToken = response.headers.refresh
-        console.log(response)
+    async MemberLogin({ commit }, user) {
+      await login(user, (response) => {
+        let accessToken = response.headers.authorization;
+        let refreshToken = response.headers.refresh;
+        console.log(response);
         console.log(accessToken);
         console.log(response.data);
-        commit("SET_IS_LOGIN",true)
-        commit("SET_USER_INFO",response.data);
+        commit("SET_IS_LOGIN", true);
+        commit("SET_USER_INFO", response.data);
         commit("SET_IS_VALID_TOKEN", true);
         sessionStorage.setItem("access-token", accessToken);
-        sessionStorage.setItem("refresh-token",refreshToken);
-      }),(error) =>{
-        console.log(error)
-      }
+        sessionStorage.setItem("refresh-token", refreshToken);
+      }),
+        (error) => {
+          console.log(error);
+        };
     },
-    async redirectOAuth({commit},member){
-
-      commit("SET_IS_LOGIN",true)
-      commit("SET_USER_INFO",{name:member.name,id:member.id});
+    async redirectOAuth({ commit }, member) {
+      commit("SET_IS_LOGIN", true);
+      commit("SET_USER_INFO", { name: member.name, id: member.id });
       commit("SET_IS_VALID_TOKEN", true);
 
       sessionStorage.setItem("access-token", member.token);
       console.log(member);
-      console.log(member.token)
+      console.log(member.token);
       console.log(sessionStorage.getItem("access-token"));
     },
   },

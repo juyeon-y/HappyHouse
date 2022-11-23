@@ -18,7 +18,11 @@
         <b-navbar-nav>
           <b-nav-item href="#">
             <router-link :to="{ name: 'main' }" class="link">
-              <b-icon icon="house-door" animation="fade" font-scale="2"></b-icon>
+              <b-icon
+                icon="house-door"
+                animation="fade"
+                font-scale="2"
+              ></b-icon>
               메인
             </router-link>
             <router-link :to="{ name: 'insta' }" class="m-2 link">
@@ -30,11 +34,19 @@
               게시판
             </router-link>
             <router-link :to="{ name: 'house' }" class="m-2 link">
-              <b-icon icon="house-fill" animation="fade" font-scale="2"></b-icon>
+              <b-icon
+                icon="house-fill"
+                animation="fade"
+                font-scale="2"
+              ></b-icon>
               아파트정보
             </router-link>
             <router-link :to="{ name: 'todo' }" class="link">
-              <b-icon icon="calendar-check" animation="fade" font-scale="2"></b-icon>
+              <b-icon
+                icon="calendar-check"
+                animation="fade"
+                font-scale="2"
+              ></b-icon>
               TodoList
             </router-link>
           </b-nav-item>
@@ -43,13 +55,22 @@
         <!-- after login -->
         <b-navbar-nav class="ml-auto" v-if="userInfo">
           <b-nav-item class="align-self-center">
-            <b-avatar variant="primary" v-text="userInfo.name.charAt(0).toUpperCase()"></b-avatar>
-            {{ userInfo.name }}님 환영합니다.
+            <b-avatar
+              variant="primary"
+              v-text="userInfo.userid.charAt(0).toUpperCase()"
+            ></b-avatar>
+            {{ userInfo.username }}({{ userInfo.userid }})님 환영합니다.
           </b-nav-item>
           <b-nav-item class="align-self-center">
-            <router-link :to="{ name: 'mypage' }" class="link align-self-center">내정보보기</router-link>
+            <router-link :to="{ name: 'mypage' }" class="link align-self-center"
+              >내정보보기</router-link
+            >
           </b-nav-item>
-          <b-nav-item class="align-self-center link" @click.prevent="onClickLogout">로그아웃</b-nav-item>
+          <b-nav-item
+            class="align-self-center link"
+            @click.prevent="onClickLogout"
+            >로그아웃</b-nav-item
+          >
         </b-navbar-nav>
         <!-- before login -->
         <b-navbar-nav class="ml-auto" v-else>
@@ -63,7 +84,9 @@
               </router-link>
             </b-dropdown-item>
             <b-dropdown-item href="#">
-              <router-link :to="{ name: 'login' }" class="link"> <b-icon icon="key"></b-icon> 로그인 </router-link>
+              <router-link :to="{ name: 'login' }" class="link">
+                <b-icon icon="key"></b-icon> 로그인
+              </router-link>
             </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>

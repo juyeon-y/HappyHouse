@@ -24,12 +24,21 @@
           <template #cell(subject)="data">
             <router-link
               :to="{
+                name: 'login',
+              }"
+              v-if="this.userInfo.id === null"
+            >
+              {{ data.item.title }}
+            </router-link>
+            <router-link
+              :to="{
                 name: 'boardview',
                 params: {
                   code: data.item.code,
                   member_id: this.userInfo.id,
                 },
               }"
+              v-else
             >
               {{ data.item.title }}
             </router-link>
