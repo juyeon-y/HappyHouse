@@ -18,7 +18,10 @@
                 required
                 placeholder="아이디 입력...."
                 @keyup.enter="login"
+                aria-describedby="input-live-feedback"
+            :state="emailPasswordVaild"
               ></b-input>
+              <b-form-invalid-feedback id="input-live-feedback">이메일과 비밀번호를 확인해 주세요 </b-form-invalid-feedback>
             </b-form-group>
             <b-form-group label="비밀번호:" label-for="password">
               <b-input
@@ -59,6 +62,7 @@ export default {
         email: null,
         password: null,
       },
+      emailPasswordVaild:null
     };
   },
   computed: {

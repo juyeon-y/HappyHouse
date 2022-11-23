@@ -32,7 +32,7 @@
           no-body
           >작성일시: {{ article.reg_datetime | dateFormat }}
           <b-card-body class="text-left">
-            <div v-html="message"></div>
+            <div v-html="message  "></div>
           </b-card-body>
         </b-card>
       </b-col>
