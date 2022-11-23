@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterAfter(new JwtAuthorizeFilter(authenticationManager(), refreshTokenRepository, jwtTokenUtils), JwtAuthenticationFilter.class);
         http
                 .authorizeRequests()
-                .antMatchers("/user/test")
+                .antMatchers("/user/test","/member/myInfo")
                 .authenticated();
         http.authorizeRequests().antMatchers("/**").permitAll();
         http.authorizeRequests()
