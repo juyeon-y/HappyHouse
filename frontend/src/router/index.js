@@ -79,11 +79,15 @@ const routes = [
         component: () => import("@/components/user/UserLogin"),
       },
       {
-        path: "mypage",
+        path: "/member/mypage",
         name: "mypage",
-        beforeEnter: onlyAuthUser,
         component: () => import("@/components/user/UserMyPage"),
       },
+      {
+        path:"oauth",
+        name:"oauth",
+        component: ()=> import("@/components/user/UserOAuthRedirect")
+      }
     ],
   },
   {
@@ -100,25 +104,25 @@ const routes = [
       {
         path: "write",
         name: "boardwrite",
-        beforeEnter: onlyAuthUser,
+        //beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardWrite"),
       },
       {
         path: "view/:articleno",
         name: "boardview",
-        beforeEnter: onlyAuthUser,
+        //beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardView"),
       },
       {
         path: "modify",
         name: "boardmodify",
-        beforeEnter: onlyAuthUser,
+        //beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardModify"),
       },
       {
         path: "delete/:articleno",
         name: "boarddelete",
-        beforeEnter: onlyAuthUser,
+        //beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardDelete"),
       },
     ],

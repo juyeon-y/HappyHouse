@@ -3,7 +3,7 @@ import { apiInstance } from "./index.js";
 const api = apiInstance();
 
 async function login(user, success, fail) {
-  await api.post(`/user/login`, JSON.stringify(user)).then(success).catch(fail);
+  await api.post(`/login`, JSON.stringify(user)).then(success).catch(fail);
 }
 
 async function findById(userid, success, fail) {
@@ -19,5 +19,10 @@ async function tokenRegeneration(user, success, fail) {
 async function logout(userid, success, fail) {
   await api.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
+async function checkEmail(email,success,fail){
+  await api.post(`/member/`,{
+    email:email
+  }).then(success).catch(fail);
+}
 
-export { login, findById, tokenRegeneration, logout };
+export { login, findById, tokenRegeneration, logout ,checkEmail };

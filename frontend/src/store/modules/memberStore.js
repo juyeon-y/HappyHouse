@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout } from "@/api/member";
+import { login, findById, tokenRegeneration, logout,} from "@/api/member";
 
 const memberStore = {
   namespaced: true,
@@ -135,6 +135,28 @@ const memberStore = {
           console.log(error);
         }
       );
+    },
+    async MemberLogin({commit},user){
+      await login(user,(response) =>{
+        let accessToken = response.headers.authorization
+        console.log(response)
+        console.log(accessToken);
+        console.log(response.data);
+        commit("SET_IS_LOGIN",true)
+        commit("SET_USER_INFO",response.data);
+        sessionStorage.setItem("access-token", accessToken);
+      }),(error) =>{
+        console.log(error)
+      }
+    },
+    async redirectOAuth({commit},member){
+
+      commit("SET_IS_LOGIN",true)
+      commit("SET_USER_INFO",{name:member.name});
+      sessionStorage.setItem("access-token", member.token);
+      console.log(member);
+      console.log(member.token)
+      console.log(sessionStorage.getItem("access-token"));
     },
   },
 };

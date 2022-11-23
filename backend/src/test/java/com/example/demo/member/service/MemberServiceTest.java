@@ -3,7 +3,7 @@ package com.example.demo.member.service;
 import com.example.demo.member.Member;
 import com.example.demo.member.repository.MemberRepository;
 import com.example.demo.member.request.MemberLoginRequest;
-import com.example.demo.member.request.MemberRegistRequest;
+import com.example.demo.member.request.MemberRegisterRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
@@ -51,8 +51,8 @@ class MemberServiceTest {
     @DisplayName("회원 가입")
     void regist(){
 
-        MemberRegistRequest memberRegistRequest = new MemberRegistRequest("123", "a@a.com", "ㅌㅌ", "ㅂㅈㄷㄱ");
-        memberService.regist(memberRegistRequest);
+        MemberRegisterRequest memberRegisterRequest = new MemberRegisterRequest("123", "a@a.com", "ㅌㅌ", "ㅂㅈㄷㄱ");
+        memberService.regist(memberRegisterRequest);
     }
 
     @Test

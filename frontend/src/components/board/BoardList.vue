@@ -7,24 +7,45 @@
     </b-row>
     <b-row class="mb-1">
       <b-col class="text-right">
-        <b-button variant="outline-primary" @click="moveWrite()">글쓰기</b-button>
+        <b-button variant="outline-primary" @click="moveWrite()"
+          >글쓰기</b-button
+        >
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <b-table striped hover :items="articles" :fields="fields" @row-clicked="viewArticle">
+        <b-table
+          striped
+          hover
+          :items="articles"
+          :fields="fields"
+          @row-clicked="viewArticle"
+        >
           <template #cell(subject)="data">
-            <router-link :to="{ name: 'boardview', params: { articleno: data.item.articleno } }">
-              {{ data.item.subject }}
+            <router-link
+              :to="{
+                name: 'boardview',
+                params: { code: data.item.code },
+              }"
+            >
+              {{ data.item.title }}
             </router-link>
           </template>
         </b-table>
+        <span v-if="data.hasPreviousPage" @click="reload(data.prePage)"
+          >&lt;&lt;</span
+        >
+        &nbsp; &nbsp; {{ data.pageNum }} &nbsp; &nbsp;
+        <span v-if="data.hasNextPage" @click="reload(data.nextPage)"
+          >&gt;&gt;</span
+        >
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
+import axios from "axios";
 import { listArticle } from "@/api/board";
 
 export default {
@@ -33,25 +54,24 @@ export default {
     return {
       articles: [],
       fields: [
-        { key: "articleno", label: "글번호", tdClass: "tdClass" },
-        { key: "subject", label: "제목", tdClass: "tdSubject" },
-        { key: "userid", label: "작성자", tdClass: "tdClass" },
-        { key: "regtime", label: "작성일", tdClass: "tdClass" },
-        { key: "hit", label: "조회수", tdClass: "tdClass" },
+        { key: "code", label: "글번호", tdClass: "tdClass" },
+        { key: "title", label: "제목", tdClass: "tdSubject" },
+        { key: "writer", label: "작성자", tdClass: "tdClass" },
+        { key: "reg_datetime", label: "작성일", tdClass: "tdClass" },
+        { key: "comment", label: "댓글수", tdClass: "tdClass" },
+        { key: "like", label: "추천수", tdClass: "tdClass" },
       ],
+      data: {},
     };
   },
   created() {
-    let param = {
-      pg: 1,
-      spp: 20,
-      key: null,
-      word: null,
-    };
+    let param = { pageNum: 1, pageSize: 5 };
     listArticle(
       param,
       ({ data }) => {
-        this.articles = data;
+        console.log(data);
+        this.articles = data.list;
+        this.data = data;
       },
       (error) => {
         console.log(error);
@@ -65,8 +85,20 @@ export default {
     viewArticle(article) {
       this.$router.push({
         name: "boardview",
-        params: { articleno: article.articleno },
+        params: { code: article.code },
       });
+    },
+    reload(pageNum) {
+      console.log(pageNum);
+      axios
+        .get("http://localhost:9999/vue/board", null, {
+          params: { pageNum, pageSize: 10 },
+        })
+        .then(({ data }) => {
+          console.log("새 데이터", data);
+          this.articles = data.list;
+          this.data = data;
+        });
     },
   },
 };
