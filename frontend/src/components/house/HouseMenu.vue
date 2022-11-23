@@ -32,8 +32,8 @@ export default {
     data() {
         return {
             items: [
-                ["mdi-map-search-outline", "지역으로 검색하기", "/house/list"],
-                ["mdi-text-search-variant", "키워드로 검색하기", "/house/keysearch"],
+                ["mdi-map-search-outline", "매물 검색하기", "/house/list"],
+                //["mdi-text-search-variant", "키워드로 검색하기", "/house/keysearch"],
                 ["mdi-star-plus", "관심매물 보기", "/house/interestlist"],
             ],
         };
