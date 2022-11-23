@@ -43,8 +43,9 @@
         size="sm"
         @click="likeDownArticle"
         class="mr-2"
-        >취소</b-button
       >
+        <b-icon icon="star-fill" aria-hidden="true"></b-icon
+      ></b-button>
     </b-col>
     <b-col class="text-right" v-else>
       <b-button
@@ -60,8 +61,8 @@
       ><template v-slot:cell(actions)="{ item }">
         <span
           ><b-button @click="likeDownComment(item.id)" v-if="item.likes === 1"
-            >취소</b-button
-          >
+            ><b-icon icon="star-fill" aria-hidden="true"></b-icon
+          ></b-button>
           <b-button variant="primary" @click="likeUpComment(item.id)" v-else
             >추천</b-button
           >
@@ -171,7 +172,6 @@ export default {
           params: param,
         })
         .then(({ data }) => {
-          alert("추천 완");
           console.log(data);
           this.article.like = 1;
         });
@@ -186,7 +186,6 @@ export default {
           params: param,
         })
         .then(({ data }) => {
-          alert("추천 취소");
           console.log(data);
           this.article.like = 0;
         });
@@ -209,7 +208,6 @@ export default {
           params: a,
         })
         .then(({ data }) => {
-          alert("댓글이 등록되었습니다");
           console.log(data);
           this.data = data;
           this.text = "";
@@ -235,7 +233,6 @@ export default {
             params: a,
           })
           .then(({ data }) => {
-            alert("댓글이 삭제되었습니다.");
             console.log(data);
             this.data = data;
             this.text = "";
@@ -257,7 +254,6 @@ export default {
       }
     },
     likeUpComment(id) {
-      alert("좋아요");
       let param = {
         comment_id: id,
         user_id: this.userInfo.id,
@@ -285,7 +281,6 @@ export default {
         });
     },
     likeDownComment(id) {
-      alert("좋아요 취소");
       let param = {
         comment_id: id,
         user_id: this.userInfo.id,
@@ -295,7 +290,6 @@ export default {
           params: param,
         })
         .then(({ data }) => {
-          alert("추천 취소");
           console.log(data);
           param = {
             code: this.$route.params.code,
