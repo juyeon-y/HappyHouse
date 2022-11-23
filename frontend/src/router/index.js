@@ -30,109 +30,104 @@ Vue.use(VueRouter);
 // };
 
 const routes = [
-  {
-    path: "/",
-    name: "main",
-    component: AppMain,
-  },
-  {
-    path: "/instagram",
-    name: "insta",
-    component: AppInstagram,
-  },
-  {
-    path: "/house",
-    name: "house",
-    component: AppHouse,
-    redirect: "/house/list",
-    children: [
-      {
-        path: "list",
-        name: "houselist",
-        component: () => import("@/components/house/HouseList"),
-      },
-      {
-        path: "detail",
-        name: "housedetail",
-        component: () => import("@/components/house/HouseDetail"),
-      },
-    ],
-  },
-  {
-    path: "/todo",
-    name: "todo",
-    component: () => import("@/views/AppTodo"),
-  },
-  {
-    path: "/user",
-    name: "user",
-    component: () => import("@/views/AppUser"),
-    children: [
-      {
-        path: "join",
-        name: "join",
-        component: () => import("@/components/user/UserRegister"),
-      },
-      {
-        path: "login",
-        name: "login",
-        component: () => import("@/components/user/UserLogin"),
-      },
-      {
-        path: "/member/mypage",
-        name: "mypage",
-        component: () => import("@/components/user/UserMyPage"),
-      },
-      {
-        path:"oauth",
-        name:"oauth",
-        component: ()=> import("@/components/user/UserOAuthRedirect")
-      }
-    ],
-  },
-  {
-    path: "/board",
-    name: "board",
-    component: () => import("@/views/AppBoard"),
-    redirect: "/board/list",
-    children: [
-      {
-        path: "list",
-        name: "boardlist",
-        component: () => import("@/components/board/BoardList"),
-      },
-      {
-        path: "write",
-        name: "boardwrite",
-        //beforeEnter: onlyAuthUser,
-        component: () => import("@/components/board/BoardWrite"),
-      },
-      {
-        path: "view/:articleno",
-        name: "boardview",
-        //beforeEnter: onlyAuthUser,
-        component: () => import("@/components/board/BoardView"),
-      },
-      {
-        path: "modify",
-        name: "boardmodify",
-        //beforeEnter: onlyAuthUser,
-        component: () => import("@/components/board/BoardModify"),
-      },
-      {
-        path: "delete/:articleno",
-        name: "boarddelete",
-        //beforeEnter: onlyAuthUser,
-        component: () => import("@/components/board/BoardDelete"),
-      },
-    ],
-  },
+    {
+        path: "/",
+        name: "main",
+        component: AppMain,
+    },
+    {
+        path: "/instagram",
+        name: "insta",
+        component: AppInstagram,
+    },
+    {
+        path: "/house",
+        name: "house",
+        component: AppHouse,
+        redirect: "/house/list",
+        children: [
+            {
+                path: "list",
+                name: "houselist",
+                component: () => import("@/components/house/HouseList"),
+            },
+            {
+                path: "detail",
+                name: "housedetail",
+                component: () => import("@/components/house/HouseDetail"),
+            },
+        ],
+    },
+    {
+        path: "/user",
+        name: "user",
+        component: () => import("@/views/AppUser"),
+        children: [
+            {
+                path: "join",
+                name: "join",
+                component: () => import("@/components/user/UserRegister"),
+            },
+            {
+                path: "login",
+                name: "login",
+                component: () => import("@/components/user/UserLogin"),
+            },
+            {
+                path: "/member/mypage",
+                name: "mypage",
+                component: () => import("@/components/user/UserMyPage"),
+            },
+            {
+                path: "oauth",
+                name: "oauth",
+                component: () => import("@/components/user/UserOAuthRedirect"),
+            },
+        ],
+    },
+    {
+        path: "/board",
+        name: "board",
+        component: () => import("@/views/AppBoard"),
+        redirect: "/board/list",
+        children: [
+            {
+                path: "list",
+                name: "boardlist",
+                component: () => import("@/components/board/BoardList"),
+            },
+            {
+                path: "write",
+                name: "boardwrite",
+                //beforeEnter: onlyAuthUser,
+                component: () => import("@/components/board/BoardWrite"),
+            },
+            {
+                path: "view/:articleno",
+                name: "boardview",
+                //beforeEnter: onlyAuthUser,
+                component: () => import("@/components/board/BoardView"),
+            },
+            {
+                path: "modify",
+                name: "boardmodify",
+                //beforeEnter: onlyAuthUser,
+                component: () => import("@/components/board/BoardModify"),
+            },
+            {
+                path: "delete/:articleno",
+                name: "boarddelete",
+                //beforeEnter: onlyAuthUser,
+                component: () => import("@/components/board/BoardDelete"),
+            },
+        ],
+    },
 ];
 
 const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
-  routes,
+    mode: "history",
+    base: process.env.BASE_URL,
+    routes,
 });
 
 export default router;

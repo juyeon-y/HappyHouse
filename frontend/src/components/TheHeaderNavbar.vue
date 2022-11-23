@@ -1,10 +1,10 @@
 <template>
-    <div>
-        <b-navbar toggleable="lg" type="dark" variant="dark">
+    <div id="root">
+        <b-navbar toggleable="lg">
             <b-navbar-brand href="#">
                 <router-link :to="{ name: 'main' }">
                     <b-img
-                        :src="require('@/assets/ssafy_logo.png')"
+                        :src="require('@/assets/logo.png')"
                         id="logo"
                         class="d-inline-block align-top"
                         alt="logo"
@@ -17,26 +17,9 @@
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav>
                     <b-nav-item href="#">
-                        <router-link :to="{ name: 'main' }" class="link">
-                            <b-icon icon="house-door" animation="fade" font-scale="2"></b-icon>
-                            메인
-                        </router-link>
-                        <router-link :to="{ name: 'insta' }" class="m-2 link">
-                            <b-icon icon="instagram" animation="fade" font-scale="2"></b-icon>
-                            인스타그램
-                        </router-link>
-                        <router-link :to="{ name: 'board' }" class="m-2 link">
-                            <b-icon icon="journal" animation="fade" font-scale="2"></b-icon>
-                            게시판
-                        </router-link>
-                        <router-link :to="{ name: 'house' }" class="m-2 link">
-                            <b-icon icon="house-fill" animation="fade" font-scale="2"></b-icon>
-                            아파트정보
-                        </router-link>
-                        <router-link :to="{ name: 'todo' }" class="link">
-                            <b-icon icon="calendar-check" animation="fade" font-scale="2"></b-icon>
-                            TodoList
-                        </router-link>
+                        <router-link :to="{ name: 'main' }" class="link"> 메인 </router-link>
+                        <router-link :to="{ name: 'board' }" class="link"> 게시판 </router-link>
+                        <router-link :to="{ name: 'house' }" class="link"> 아파트정보 </router-link>
                     </b-nav-item>
                 </b-navbar-nav>
 
@@ -93,7 +76,7 @@ export default {
     },
     computed: {
         ...mapState(memberStore, ["isLogin", "userInfo"]),
-        ...mapGetters(["checkUserInfo"]),
+        //...mapGetters(["checkUserInfo"]),
     },
     methods: {
         ...mapActions(memberStore, ["userLogout"]),
@@ -118,10 +101,26 @@ export default {
 
 <style scoped>
 #logo {
+    margin-left: 20px;
     width: 120px;
+    height: 50px;
 }
 
 .link {
     text-decoration: none;
+    font-family: "Pretendard-Regular";
+    color: hsl(200, 15%, 43%);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding-block: 15px;
+    margin-left: 50px;
+}
+
+@font-face {
+    font-family: "Pretendard-Regular";
+    src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+        format("woff");
+    font-weight: 400;
+    font-style: normal;
 }
 </style>
