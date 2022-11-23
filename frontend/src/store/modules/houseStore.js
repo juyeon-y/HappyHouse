@@ -12,6 +12,8 @@ const houseStore = {
         house: null,
         zoomLevel: 3,
         currCategory: "",
+        searchBarChk: true,
+        resetMapChk: false,
     },
     getters: {},
     mutations: {
@@ -70,6 +72,12 @@ const houseStore = {
         },
         UPDATE_CURR_CATEGORY(state, currCategory) {
             state.currCategory = currCategory;
+        },
+        UPDATE_SEARCHBAR_CHK(state, searchBarChk) {
+            state.searchBarChk = searchBarChk;
+        },
+        UPDATE_RESET_MAP_CHK(state, resetMapChk) {
+            state.resetMapChk = resetMapChk;
         },
     },
     actions: {

@@ -1,6 +1,6 @@
 <template>
     <b-container class="bv-example-row mt-3 text-center" id="container">
-        <house-search-bar id="search-bar"></house-search-bar>
+        <house-search-bar id="search-bar" v-show="searchBarChk"></house-search-bar>
         <v-row>
             <v-col cols="4" align="left">
                 <router-view></router-view>
@@ -14,12 +14,18 @@
 <script>
 import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 import HouseMap from "@/components/house/HouseMap.vue";
+import { mapState } from "vuex";
+
+const houseStore = "houseStore";
 
 export default {
     name: "AppHouse",
     components: {
         HouseSearchBar,
         HouseMap,
+    },
+    computed: {
+        ...mapState(houseStore, ["searchBarChk"]),
     },
 };
 </script>

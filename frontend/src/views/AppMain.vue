@@ -15,5 +15,6 @@ export default {
 #main-root {
     height: 100%;
     background-image: url("@/assets/main_back.jpg");
+    background-size: cover;
 }
 </style>
