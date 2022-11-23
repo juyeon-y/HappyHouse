@@ -1,20 +1,32 @@
-import { sidoList, gugunList, houseList } from "@/api/house.js";
+import { sidoList, gugunList, dongList, yearList, monthList, houseList } from "@/api/house.js";
 
 const houseStore = {
   namespaced: true,
   state: {
-    sidos: [{ value: null, text: "선택하세요" }],
-    guguns: [{ value: null, text: "선택하세요" }],
+    sidos: [{ value: null, text: "시도" }],
+    guguns: [{ value: null, text: "시군구" }],
+    dongs: [{ value: null, text: "읍면동" }],
+    years: [{ value: null, text: "년도" }],
+    months: [{ value: null, text: "월" }],
     houses: [],
     house: null,
   },
   getters: {},
   mutations: {
     CLEAR_SIDO_LIST(state) {
-      state.sidos = [{ value: null, text: "선택하세요" }];
+      state.sidos = [{ value: null, text: "시도" }];
     },
     CLEAR_GUGUN_LIST(state) {
-      state.guguns = [{ value: null, text: "선택하세요" }];
+      state.guguns = [{ value: null, text: "시군구" }];
+    },
+    CLEAR_DONG_LIST(state) {
+      state.dongs = [{ value: null, text: "읍면동" }];
+    },
+    CLEAR_YEAR_LIST(state) {
+      state.years = [{ value: null, text: "년도" }];
+    },
+    CLEAR_MONTH_LIST(state) {
+      state.months = [{ value: null, text: "월" }];
     },
     CLEAR_APT_LIST(state) {
       state.houses = [];
@@ -28,6 +40,21 @@ const houseStore = {
     SET_GUGUN_LIST(state, guguns) {
       guguns.forEach((gugun) => {
         state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
+      });
+    },
+    SET_DONG_LIST(state, dongs) {
+      dongs.forEach((dong) => {
+        state.dongs.push({ value: dong.dongCode, text: dong.dongName });
+      });
+    },
+    SET_YEAR_LIST(state, years) {
+      years.forEach((year) => {
+        state.years.push({ value: year, text: year });
+      });
+    },
+    SET_MONTH_LIST(state, months) {
+      months.forEach((month) => {
+        state.months.push({ value: month, text: month });
       });
     },
     SET_HOUSE_LIST(state, houses) {
@@ -60,17 +87,56 @@ const houseStore = {
         }
       );
     },
-    getHouseList: ({ commit }, gugunCode) => {
-      const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
+    getDong: ({ commit }, gugunCode) => {
+      const params = { gugun: gugunCode };
+      dongList(
+        params,
+        ({ data }) => {
+          commit("SET_DONG_LIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getYear: ({ commit }, dongCode) => {
+      const params = { dong: dongCode };
+      yearList(
+        params,
+        ({ data }) => {
+          commit("SET_YEAR_LIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getMonth: ({ commit }, param) => {
       const params = {
-        LAWD_CD: gugunCode,
-        DEAL_YMD: "202207",
-        serviceKey: decodeURIComponent(SERVICE_KEY),
+        dong: param[0],
+        year: param[1],
+      };
+      monthList(
+        params,
+        ({ data }) => {
+          commit("SET_MONTH_LIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getHouseList: ({ commit }, param) => {
+      const params = {
+        dong: param[0],
+        year: param[1],
+        month: param[2],
       };
       houseList(
         params,
         ({ data }) => {
-          commit("SET_HOUSE_LIST", data.response.body.items.item);
+          console.log(data);
+          commit("SET_HOUSE_LIST", data);
         },
         (error) => {
           console.log(error);
@@ -78,7 +144,6 @@ const houseStore = {
       );
     },
     detailHouse: ({ commit }, house) => {
-      // 나중에 house.일련번호를 이용하여 API 호출
       commit("SET_DETAIL_HOUSE", house);
     },
   },

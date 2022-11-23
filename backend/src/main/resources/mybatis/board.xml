@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.board.mapper.BoardMapper">
+
+	<resultMap type="board" id="board1">
+		<result column="code" property="code" />
+		<result column="title" property="title" />
+		<result column="content" property="content" />
+		<result column="writer" property="writer" />
+		<result column="reg_datetime" property="reg_datetime" />
+	</resultMap>
+
+	<resultMap type="board" id="listBoard" extends="board1">
+		<result column="likes" property="like" />
+		<result column="comments" property="comment" />
+	</resultMap>
+
+	<resultMap type="board" id="viewBoard" extends="board1">
+		<result column="likes" property="like" />
+	</resultMap>
+
+	<insert id="writeBoard" parameterType="board">
+		insert into board(writer, title, content)
+		values(#{writer},
+		#{title},#{content})
+		<selectKey resultType="int" keyProperty="code" order="AFTER">
+			select
+			last_insert_id()
+		</selectKey>
+	</insert>
+
+	<select id="getBoardList" resultMap="listBoard">
+		select * , (select count(id)
+		from board_like where board_code=code) as likes,
+		(select count(id) from
+		comment where board_code=code) as comments
+		from board
+		order by code desc
+	</select>
+
+	<select id="isLike" resultType="int">
+		select count(*) from board_like
+		where board_code = #{code} and member_id = #{member_id}
+	</select>
+
+	<select id="selectOne" resultMap="viewBoard" parameterType="map">
+		SELECT *,
+		(select count(*) from board_like where board_code=#{code} and
+		member_id=(select id
+		from member
+		where name=#{username})) as likes
+		FROM board
+		where code=#{code};
+	</select>
+
+
+	<update id="modifyBoard" parameterType="board">
+		update board
+		set title
+		=#{title}, content = #{content}
+		where code = #{code}
+	</update>
+
+	<delete id="deleteBoard" parameterType="int">
+		delete from board
+		where
+		code = #{code}
+	</delete>
+
+	<insert id="likeUp" parameterType="map">
+		insert into board_like (board_code , member_id)
+		values(#{code},#{id})
+	</insert>
+
+	<delete id="likeDown" parameterType="map">
+		delete from board_like
+		where board_code =#{code}
+		and member_id = #{id}
+	</delete>
+
+</mapper>
