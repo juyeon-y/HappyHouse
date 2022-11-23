@@ -56,7 +56,11 @@ public class MemberController {
                     .nickname(request.getNickname())
                     .build());
         }
-
-
     }
+
+    @PostMapping("/delete")
+    public void delete(@AuthenticationPrincipal Member member) {
+        memberService.delete(member);
+    }
+
 }

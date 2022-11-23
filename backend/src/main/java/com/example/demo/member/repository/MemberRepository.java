@@ -15,4 +15,5 @@ public interface MemberRepository {
 
     void update(Member member);
 
+    void delete(Integer id);
 }

@@ -36,7 +36,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         sb.append(targetUrl);
         sb.append("/user/oauth?");
         sb.append("token=").append(tokens).append("&");
-        sb.append("name=").append(member.getName());
+        sb.append("name=").append(member.getName()).append("&");
+        sb.append("id=").append(member.getId());
         log.info("tartgetUrl {}",sb);
         response.sendRedirect(sb.toString());
 

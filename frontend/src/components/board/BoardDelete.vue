@@ -17,7 +17,7 @@ import { deleteArticle } from "@/api/board";
 export default {
   name: "BoardDelete",
   created() {
-    let param = this.$route.params.articleno;
+    let param = this.$route.params.code;
     deleteArticle(
       param,
       ({ data }) => {
