@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.member.repository.MemberRepository">
+    <insert id="save" parameterType="Member" keyColumn="id" useGeneratedKeys="true">
+        insert into member(email, name, nickname, password,role)
+        values (#{email}, #{name}, #{nickname}, #{password} ,#{role})
+    </insert>
+    <update id="update" parameterType="Member">
+        update member
+        set name=#{name},
+            email=#{email},
+            nickname=#{nickname}
+        where id = #{id};
+    </update>
+    <delete id="delete" parameterType="integer">
+        delete from member where id = #{id};
+    </delete>
+    <select id="findByEmail" parameterType="String" resultType="com.example.demo.member.Member">
+        select id, `name`, `password`, nickname, email, `role`
+        from member
+        where email = #{email}
+    </select>
+    <select id="findById" resultType="com.example.demo.member.Member">
+
+        select id, `name`, `password`, nickname, email, `role`
+        from member
+        where id = #{id}
+    </select>
+
+
+</mapper>

@@ -46,7 +46,7 @@
 
           <b-button variant="primary" class="mr-1" @click="changeReadonly" v-if="readonly">정보수정</b-button>
           <b-button variant="primary" class="mr-1" @click="changeUser" v-if="!readonly">제출</b-button>
-          <b-button variant="danger" >회원탈퇴</b-button>
+          <b-button variant="danger" @click="deleteMember">회원탈퇴</b-button>
         </b-jumbotron>
       </b-col>
       <b-col></b-col>
@@ -102,6 +102,19 @@ export default {
         console.log(response);
         this.$router.go();
       })
+    },
+    deleteMember(){
+      let c = confirm("탈퇴하시겠습니까?")
+      if(c){
+
+        axios.post("http://localhost:9999/member/delete",null,{
+        headers : {"Authorization" : sessionStorage.getItem("access-token")}
+      }).then((response) =>{
+        console.log(response);
+        this.$router.go();
+      });
+      }
+    
     }
   }
 };
