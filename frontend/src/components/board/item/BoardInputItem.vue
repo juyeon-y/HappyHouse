@@ -102,9 +102,7 @@ export default {
         ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err &&
         !this.article.content &&
-        ((msg = "내용 입력해주세요"),
-        (err = false),
-        this.$refs.content.focus());
+        ((msg = "내용 입력해주세요"), (err = false));
 
       if (!err) alert(msg);
       else

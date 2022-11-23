@@ -191,37 +191,45 @@ export default {
         });
     },
     writeComment() {
-      let param = {
-        code: this.$route.params.code,
-        username: this.userInfo.name,
-      };
+      let err = true;
+      let msg = "";
 
-      let a = {
-        board_code: this.$route.params.code,
-        writer: this.userInfo.name,
-        comment: this.text,
-        member_id: this.userInfo.id,
-      };
-      console.log(a);
-      axios
-        .post("http://localhost:9999/comment/write", null, {
-          params: a,
-        })
-        .then(({ data }) => {
-          console.log(data);
-          this.data = data;
-          this.text = "";
-          getComment(
-            param,
-            ({ data }) => {
-              console.log(data);
-              this.items = data;
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-        });
+      !this.text && ((msg = "내용 입력해주세요"), (err = false));
+
+      if (!err) alert(msg);
+      else {
+        let param = {
+          code: this.$route.params.code,
+          username: this.userInfo.name,
+        };
+
+        let a = {
+          board_code: this.$route.params.code,
+          writer: this.userInfo.name,
+          comment: this.text,
+          member_id: this.userInfo.id,
+        };
+        console.log(a);
+        axios
+          .post("http://localhost:9999/comment/write", null, {
+            params: a,
+          })
+          .then(({ data }) => {
+            console.log(data);
+            this.data = data;
+            this.text = "";
+            getComment(
+              param,
+              ({ data }) => {
+                console.log(data);
+                this.items = data;
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
+          });
+      }
     },
     deleteComment(id) {
       if (confirm("댓글을 삭제하시겠습니까?")) {

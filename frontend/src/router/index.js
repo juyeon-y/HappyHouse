@@ -61,11 +61,6 @@ const routes = [
     ],
   },
   {
-    path: "/todo",
-    name: "todo",
-    component: () => import("@/views/AppTodo"),
-  },
-  {
     path: "/user",
     name: "user",
     component: () => import("@/views/AppUser"),
@@ -104,6 +99,7 @@ const routes = [
       {
         path: "list",
         name: "boardlist",
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardList"),
       },
       {
@@ -113,7 +109,7 @@ const routes = [
         component: () => import("@/components/board/BoardWrite"),
       },
       {
-        path: "view/:articleno",
+        path: "view/:code",
         name: "boardview",
         beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardView"),

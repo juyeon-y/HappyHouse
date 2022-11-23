@@ -5,21 +5,19 @@ import createPersistedState from "vuex-persistedstate";
 import boardStore from "@/store/modules/boardStore";
 import houseStore from "@/store/modules/houseStore";
 import memberStore from "@/store/modules/memberStore";
-import todoStore from "@/store/modules/todoStore";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: {
-    boardStore,
-    houseStore,
-    memberStore,
-    todoStore,
-  },
-  plugins: [
-    createPersistedState({
-      // 브라우저 종료시 제거하기 위해 localStorage가 아닌 sessionStorage로 변경. (default: localStorage)
-      storage: sessionStorage,
-    }),
-  ],
+    modules: {
+        boardStore,
+        houseStore,
+        memberStore,
+    },
+    plugins: [
+        createPersistedState({
+            // 브라우저 종료시 제거하기 위해 localStorage가 아닌 sessionStorage로 변경. (default: localStorage)
+            storage: sessionStorage,
+        }),
+    ],
 });
