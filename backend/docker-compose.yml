@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+  database-mysql:
+    container_name: database-mysql
+    image: mysql/mysql-server:8.0
+
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: 'test'
+    ports:
+      - 3307:3306
+#    networks:
+#      - happyhouse
+
+  springboot:
+    image: suker800/happyhouse
+    ports:
+      - 9999:9999
+    links:
+      - database-mysql
+    depends_on:
+      - database-mysql
+#    networks:
+#      - happyhouse
+
+
