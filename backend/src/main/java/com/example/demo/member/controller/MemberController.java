@@ -55,8 +55,7 @@ public class MemberController {
                     .email(request.getEmail())
                     .nickname(request.getNickname())
                     .build());
-        }
-
+        }}
     @PostMapping("/delete")
     public void delete(@AuthenticationPrincipal Member member) {
         memberService.delete(member);
@@ -67,4 +66,6 @@ public class MemberController {
     public void test() {
         log.info("테스트 메서드 수행");
     }
+
+
 }
