@@ -72,7 +72,7 @@ export default {
   },
   methods:{
     async checkEmail(){
-      await axios.post(`http://localhost:9999/member/checkEmail`,{
+      await axios.post(`http://44.212.204.138:9999/member/checkEmail`,{
         email:this.member.email
       })
       .then(({data})=>{
@@ -86,7 +86,7 @@ export default {
     },
     async register(){
       if(this.emailDuplicated){
-      await axios.post(`http://localhost:9999/member/register`,{
+      await axios.post(`http://44.212.204.138:9999/member/register`,{
         email:this.member.email,
         name:this.member.name,
         password:this.member.password,

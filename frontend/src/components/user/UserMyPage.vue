@@ -72,7 +72,7 @@ export default {
     }
   },
   async created(){
-    await axios.get("http://localhost:9999/member/myInfo",{
+    await axios.get("http://44.212.204.138:9999/member/myInfo",{
       headers:{
         "Authorization" : sessionStorage.getItem("access-token"),
       }}).then(({data}) =>{
@@ -91,7 +91,7 @@ export default {
       this.readonly = !this.readonly;
     },
     changeUser(){
-      axios.post("http://localhost:9999/member/update",this.member,{
+      axios.post("http://44.212.204.138:9999/member/update",this.member,{
         headers : {"Authorization" : sessionStorage.getItem("access-token")}
       }).then((response) =>{
         console.log(response);
@@ -102,7 +102,7 @@ export default {
       let c = confirm("탈퇴하시겠습니까?")
       if(c){
 
-        axios.post("http://localhost:9999/member/delete",null,{
+        axios.post("http://44.212.204.138:9999/member/delete",null,{
         headers : {"Authorization" : sessionStorage.getItem("access-token")}
       }).then((response) =>{
         console.log(response);

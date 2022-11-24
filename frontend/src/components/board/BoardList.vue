@@ -112,7 +112,7 @@ export default {
       let a = { pageNum, pageSize: 10 };
       console.log(a);
       axios
-        .post("http://localhost:9999/board", null, {
+        .post("http://44.212.204.138/:9999/board", null, {
           params: a,
         })
         .then(({ data }) => {

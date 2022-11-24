@@ -35,7 +35,7 @@
             </b-form-group>
             <b-button type="button" variant="primary" class="m-1" @click="login">로그인</b-button>
             <b-button type="button" variant="success" class="m-1" @click="movePage">회원가입</b-button>
-            <b-button type="button" class="m-1" href="http://localhost:9999/oauth2/authorization/google">
+            <b-button type="button" class="m-1" href="http://44.212.204.138:9999/oauth2/authorization/google">
               <b-icon-google></b-icon-google>
               구글 로그인
             </b-button>
@@ -83,7 +83,7 @@ export default {
     async login(){
       await this.MemberLogin(this.user);
       this.$router.push('/');
-      // await axios.post(`http://localhost:9999/login`,JSON.stringify(this.user)).then((response)=>{
+      // await axios.post(`http://44.212.204.138:9999/login`,JSON.stringify(this.user)).then((response)=>{
       //   console.log(response);
       // })
     },
