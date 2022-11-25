@@ -42,7 +42,7 @@
 	</select>
 	
 	<select id="getApt" parameterType="hashmap" resultType="houseInfoDto">
-		select h.aptCode, h.aptName, h.buildYear, h.dongCode, h.dongName, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname, d.area, d.floor, d.dealAmount,
+		select h.aptCode, h.aptName, h.buildYear, h.dongCode, h.dongName, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname, d.area, d.floor, d.dealAmount, d.no,
 				(select dealAmount from housedeal where aptCode = h.aptCode and no = (select max(no) from housedeal where aptCode = h.aptCode)) recentPrice
 		from houseinfo h
 		join housedeal d

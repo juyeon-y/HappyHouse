@@ -36,7 +36,8 @@ public class HouseInfoDto {
 	private String dealAmount;
 	@ApiModelProperty(value = "가장 최근에 매매된 가격")
 	private String recentPrice;
-
+	@ApiModelProperty(value = "거래번호")
+	private int no;
 
 	public int getAptCode() {
 		return aptCode;
@@ -156,6 +157,14 @@ public class HouseInfoDto {
 
 	public void setDealAmount(String dealAmount) {
 		this.dealAmount = dealAmount;
+	}
+
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
 	}
 
 	@Override

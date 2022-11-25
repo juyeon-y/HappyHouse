@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.example.demo.interest.model.mapper.InterestMapper">
+
+	<select id="interestList" parameterType="int" resultType="houseInfoDto">
+		select h.aptCode, h.aptName, h.buildYear, h.dongCode, h.dongName, h.jibun, h.lat, h.lng, si.sidoname, gu.gugunname, d.area, d.floor, d.dealAmount
+		from houseinfo h
+		join housedeal d
+		on h.aptCode = d.aptCode
+		left join sidocode si
+		on left(h.dongcode,2) = left(si.sidocode,2)
+		left join guguncode gu
+		on left(h.dongcode,5) = left(gu.guguncode,5)
+		where (h.aptCode, d.no) in (select aptCode, housedealNo from interestplace where memberId=#{id})
+		order by aptName
+	</select>
+	
+	<insert id="insertInterest" parameterType="map">
+		insert into interestplace (memberId, aptCode, housedealNo)
+		values(#{memberId}, #{aptCode}, #{housedealNo});
+	</insert>
+</mapper>
