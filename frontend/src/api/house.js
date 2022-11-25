@@ -26,4 +26,12 @@ function houseList(params, success, fail) {
   api.get(`/map/apt`, { params: params }).then(success).catch(fail);
 }
 
-export { sidoList, gugunList, dongList, yearList, monthList, houseList };
+function interest(params, success, fail) {
+  api.post(`/interest`, null, { params: params }).then(success).catch(fail);
+}
+
+function interestList(params, success, fail) {
+  api.post(`/interest/list`, null, { params: params }).then(success).catch(fail);
+}
+
+export { sidoList, gugunList, dongList, yearList, monthList, houseList, interest, interestList };

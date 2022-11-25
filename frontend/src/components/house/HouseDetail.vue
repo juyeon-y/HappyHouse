@@ -5,6 +5,14 @@
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <v-toolbar-title class="font-weight-bold">{{ house.aptName }}</v-toolbar-title>
+      <v-btn
+        icon
+        style="margin-left: auto; margin-right: 1px"
+        @click="setInterest"
+        v-bind:color="interested === true ? 'blue' : 'grey'"
+      >
+        <v-icon>mdi-star</v-icon>
+      </v-btn>
     </v-toolbar>
     <v-card class="overflow-y-auto" height="78vh">
       <b-container v-if="house" class="bv-example-container-row">
@@ -36,19 +44,26 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 const houseStore = "houseStore";
+const memberStore = "memberStore";
 
 export default {
   name: "HouseDetail",
   computed: {
     ...mapState(houseStore, ["house", "zoomLevel"]),
-
+    ...mapState(memberStore, ["userInfo"]),
     // house() {
     //   return this.$store.state.house;
     // },
   },
+  data() {
+    return {
+      interested: false,
+    };
+  },
+
   filters: {
     price(value) {
       if (!value) return value;
@@ -56,11 +71,21 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(houseStore, ["UPDATE_ZOOM_LEVEL"]),
+    ...mapMutations(houseStore, ["UPDATE_ZOOM_LEVEL", "SET_HOUSE_LIST"]),
+    ...mapActions(houseStore, ["insertInterest"]),
+    setInterest() {
+      this.interested = !this.interested;
+      if (this.interested) {
+        //관심매물 등록
+        console.log("ddd: " + this.userInfo.id + this.house.aptCode + this.house.no);
+        this.insertInterest([this.userInfo.id, this.house.aptCode, this.house.no]);
+      } else {
+        //관심매물 취소
+      }
+    },
     goBack() {
       this.$router.go(-1);
       this.UPDATE_ZOOM_LEVEL(3);
-      console.log(this.zoomLevel);
     },
     setRoadView() {
       var roadviewContainer = document.getElementById("roadview"); //로드뷰를 표시할 div
