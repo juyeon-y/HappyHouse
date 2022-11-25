@@ -112,6 +112,7 @@ const routes = [
       {
         path: "list",
         name: "boardlist",
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardList"),
       },
       {
@@ -123,19 +124,19 @@ const routes = [
       {
         path: "view/:articleno",
         name: "boardview",
-        //beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardView"),
       },
       {
         path: "modify",
         name: "boardmodify",
-        //beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardModify"),
       },
       {
         path: "delete/:articleno",
         name: "boarddelete",
-        //beforeEnter: onlyAuthUser,
+        beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardDelete"),
       },
     ],
